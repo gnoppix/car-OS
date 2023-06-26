@@ -1,0 +1,51 @@
+# NEWS
+## 44.0
+- No updates
+
+## 44.rc
+- Rename dconf profile to not have hyphen
+- Set dconf profile unconditionally
+- Use https instead of http in search-app
+
+## 44.beta
+- deprecation fixes
+- require mutter 44
+- Compat fix for Anaconda Installer project
+- Script session double-starting fix
+- Allow changing background in gsettings
+
+## 43.0
+- meson build fixes
+- require mutter 43
+- clean up code format
+
+## 42.0
+- No updates
+
+## 42.alpha
+- Port to mutter 42
+- Docs fixes
+- Build goo fixes
+
+## 41.0
+- Whitespace cleanup in build goo
+
+## 41.beta
+- Port to mutter 41
+- New "Kiosk Script Session"
+- Support systemd --user
+- Neuter certain keybindings
+- Crasher fix
+
+## 40.0
+- Desktop file validation fixes
+- Only full screen one window at a time, not all windows
+- Code clean-ups
+- Support X sessions that set keyboard layout with libxklavier
+- Fix crasher if localed disappears at the wrong moment
+
+## 40.alpha
+- Initial release
+- Features GNOME Kiosk compositor
+- Has sample search appliance
+- Has demo input selector

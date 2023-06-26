@@ -1,0 +1,46 @@
+stages:
+        - build
+        - test
+
+build-fedora:
+        image: registry.gitlab.gnome.org/gnome/mutter/fedora/37:x86_64-2023-02-22.0
+        stage: build
+        before_script:
+                - .gitlab-ci/checkout-mutter.sh
+                - meson mutter mutter/build --prefix=/usr
+                - meson install -C mutter/build
+        script:
+                - export BUILD_ROOT=_build
+                - meson . $BUILD_ROOT --prefix=/usr --sysconfdir=/etc --localstatedir=/var --mandir=/usr/share/man --libdir=/usr/lib64
+                - ninja -C $BUILD_ROOT
+                - ninja -C $BUILD_ROOT install
+                - ninja -C $BUILD_ROOT dist
+                - find -depth -type d -name '*.p' -exec rm -rf "{}" \;
+        except:
+                - tags
+        artifacts:
+                paths:
+                        - mutter
+                        - _build
+        only:
+            - merge_requests
+
+test-fedora:
+        image: registry.gitlab.gnome.org/gnome/mutter/fedora/37:x86_64-2023-02-22.0
+        stage: test
+        before_script:
+                - dnf -y install patchutils
+                - meson install --no-rebuild -C mutter/build
+        script:
+                - export BUILD_ROOT=_build
+                - meson . $BUILD_ROOT --prefix=/usr --sysconfdir=/etc --localstatedir=/var --mandir=/usr/share/man --libdir=/usr/lib64
+                - ninja -C $BUILD_ROOT
+                - ninja -C $BUILD_ROOT test
+                - find -depth -type d -name '*.p' -exec rm -rf "{}" \;
+        except:
+                - tags
+        artifacts:
+                paths:
+                        - _build
+        only:
+            - merge_requests
